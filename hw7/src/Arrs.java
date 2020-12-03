@@ -1,50 +1,88 @@
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+
 import java.util.Arrays;
-import java.util.Collections;
+
 
 public class Arrs {
-    public static void main(String[] args) {
 
-        ArrayList<String> arr = new ArrayList<String>();
+    private final int ARR_AMOUNT = 10;
+    private String[] arr;
+    private int add = 0;
+    private final int CUT_RATE = 2;
 
-        for (int i = 0; i <6 ; i++) {
-            arr.add("One");
-
-        }
-        System.out.println(arr);
-        System.out.println("---------------");
-        arr.add(1,"Two");
-        System.out.println(arr);
-        System.out.println("---------------");
-        System.out.println(arr.get(1));
-        System.out.println("---------------");
-        arr.remove(1);
-        System.out.println(arr);
-        System.out.println("---------------");
-
-
-        String he = new String("Helium");
-        String ne = new String("Neon");
-        String ar = new String("Argon");
-        String kr = new String("Krypton");
-        String xe = new String("Xenon");
-        String rn = new String("Radon");
-
-
-
-        ArrayList<String> nobleGases = new ArrayList<>(Arrays.asList(he, ne, ar, kr, xe, rn));
-        System.out.println(nobleGases);
-        System.out.println("--------------------------");
-        nobleGases.add(6, "Oganesson");
-        System.out.println(nobleGases);
-        System.out.println("---------------");
-        nobleGases.remove(1);
-        System.out.println(nobleGases);
-        System.out.println("---------------");
-        System.out.println(nobleGases.get(1));
-        System.out.println("---------------");
-
+    public Arrs(){
+        arr= new String[ARR_AMOUNT];
     }
 
+    public Arrs(String item) {
+        this.arr = item.split(", ");
+    }
+
+    public void removeIndex(int index) {
+        for (int i = index; i < add; i++)
+            arr[i] = arr[i + 1];
+        arr[index] = null;
+    }
+
+    public void removeItem(String item) {
+        add--;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i].equals(item)) {
+                removeIndex(i);
+                break;
+            }
+        }
+    }
+
+    public void adder(int index, String item) {
+        if (add == arr.length) resize();
+
+        for (int i = arr.length-2; i >= index; i--) {
+            arr[i + 1] = arr[i];
+        }
+        arr[index] = item;
+    }
+
+    public void adder(String item) {
+        resize();
+        arr[arr.length-1] = item;
+    }
+
+    public String get(int index) {
+        return arr[index];
+    }
+
+    public int size() {
+        return arr.length;
+    }
+
+    private void resize() {
+        int newLength= arr.length + 1;
+        arr=Arrays.copyOf(arr, newLength);
+
+    }
+    @Override
+    public String toString() {
+        return Arrays.toString(arr);
+    }
+
+
+
+    public static void main(String[] args) {
+       Arrs arr = new Arrs("Helium, Neon, Argon, Krypton, Xenon, Radon");
+        System.out.println("Size of collection is "+ arr.size()+ ". ");
+        System.out.println("Collection contains "+arr.toString()+ ". ");
+        System.out.println("Size of collection is "+ arr.size()+ ". ");
+        arr.adder(1, "Oganesson");
+        System.out.println("Collection contains "+arr.toString()+ ". ");
+        arr.adder("Radon");
+        System.out.println("Size of collection is "+ arr.size()+ ". ");
+        System.out.println("Collection contains "+arr.toString()+ ". ");
+        System.out.println("Removing 4th element");
+        arr.removeIndex(4);
+        System.out.println("Collection contains "+arr.toString()+ ". ");
+        arr.removeItem("Neon");
+        System.out.println("Removing Neon element");
+        System.out.println("Collection contains "+arr.toString()+ ". ");
+        System.out.println("Fifth element is "+ arr.get(5));
+    }
 }
