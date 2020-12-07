@@ -7,7 +7,6 @@ public class Arrs {
     private final int ARR_AMOUNT = 10;
     private String[] arr;
     private int add = 0;
-    private final int CUT_RATE = 2;
 
     public Arrs(){
         arr= new String[ARR_AMOUNT];
@@ -21,7 +20,9 @@ public class Arrs {
         for (int i = index; i < add; i++)
             arr[i] = arr[i + 1];
         arr[index] = null;
+        add--;
     }
+
 
     public void removeItem(String item) {
         add--;
@@ -34,7 +35,7 @@ public class Arrs {
     }
 
     public void adder(int index, String item) {
-        if (add == arr.length) resize();
+        if (add == arr.length) resize(1);
 
         for (int i = arr.length-2; i >= index; i--) {
             arr[i + 1] = arr[i];
@@ -43,7 +44,7 @@ public class Arrs {
     }
 
     public void adder(String item) {
-        resize();
+        resize(1);
         arr[arr.length-1] = item;
     }
 
@@ -55,8 +56,8 @@ public class Arrs {
         return arr.length;
     }
 
-    private void resize() {
-        int newLength= arr.length + 1;
+    private void resize(int size) {
+        int newLength= arr.length + size;
         arr=Arrays.copyOf(arr, newLength);
 
     }
@@ -72,7 +73,7 @@ public class Arrs {
         System.out.println("Size of collection is "+ arr.size()+ ". ");
         System.out.println("Collection contains "+arr.toString()+ ". ");
         System.out.println("Size of collection is "+ arr.size()+ ". ");
-        arr.adder(1, "Oganesson");
+        arr.adder(5, "Oganesson");
         System.out.println("Collection contains "+arr.toString()+ ". ");
         arr.adder("Radon");
         System.out.println("Size of collection is "+ arr.size()+ ". ");
